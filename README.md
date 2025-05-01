@@ -1,2 +1,2 @@
 # k3s
-Jerry is awesome
+Manifest files for media

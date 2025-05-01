@@ -23,11 +23,11 @@ spec:
         name: prowlarr
         resources:
           requests:
-            cpu: 100m
-            memory: 128Mi
-          limits:
             cpu: 500m
             memory: 512Mi
+          limits:
+            cpu: 1000m
+            memory: 1024Mi
         ports:
         - containerPort: 9696
           name: "prowlarr"
