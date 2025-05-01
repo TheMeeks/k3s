@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: music-pvc
+  namespace: servarr
+spec:
+  storageClassName: music
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 180Ti

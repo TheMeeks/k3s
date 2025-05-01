@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: books-pv
+  namespace: servarr
+  labels:
+    type: local
+spec:
+  storageClassName: books
+  capacity:
+    storage: 180Ti
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/unraid/books"
+  persistentVolumeReclaimPolicy: Retain

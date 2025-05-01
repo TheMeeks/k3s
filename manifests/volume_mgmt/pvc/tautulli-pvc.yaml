@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tautulli-pvc
+  namespace: servarr
+spec:
+  storageClassName: tautulli
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 180Ti

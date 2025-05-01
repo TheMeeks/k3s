@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radarr
+  namespace: servarr
+spec:
+  selector:
+    matchLabels:
+      app: radarr
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: radarr
+    spec:
+      volumes:
+      - name: radarr-storage
+        persistentVolumeClaim:
+          claimName: radarr-pvc
+      - name: downloads-storage
+        persistentVolumeClaim:
+          claimName: downloads-pvc
+      - name: movies-storage
+        persistentVolumeClaim:
+          claimName: movies-pvc
+      containers:
+      - image: lscr.io/linuxserver/radarr:latest
+        name: radarr
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        ports:
+        - containerPort: 7878
+          name: "radarr"
+        volumeMounts:
+        - name: radarr-storage
+          mountPath: "/config"
+        - name: downloads-storage
+          mountPath: "/downloads"
+        - name: movies-storage
+          mountPath: "/movies"

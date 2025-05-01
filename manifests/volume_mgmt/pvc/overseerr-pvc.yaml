@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: overseerr-pvc
+  namespace: servarr
+spec:
+  storageClassName: overseerr
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 180Ti

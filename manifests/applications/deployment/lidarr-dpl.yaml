@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lidarr
+  namespace: servarr
+spec:
+  selector:
+    matchLabels:
+      app: lidarr
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: lidarr
+    spec:
+      volumes:
+      - name: lidarr-storage
+        persistentVolumeClaim:
+          claimName: lidarr-pvc
+      - name: downloads-storage
+        persistentVolumeClaim:
+          claimName: downloads-pvc
+      - name: music-storage
+        persistentVolumeClaim:
+          claimName: music-pvc
+      containers:
+      - image: lscr.io/linuxserver/lidarr:latest
+        name: lidarr
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        ports:
+        - containerPort: 8686
+          name: "lidarr"
+        volumeMounts:
+        - name: lidarr-storage
+          mountPath: "/config"
+        - name: downloads-storage
+          mountPath: "/downloads"
+        - name: music-storage
+          mountPath: "/music"

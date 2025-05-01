@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tautulli
+  namespace: servarr
+spec:
+  selector:
+    matchLabels:
+      app: tautulli
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: tautulli
+    spec:
+      volumes:
+      - name: tautulli-storage
+        persistentVolumeClaim:
+          claimName: tautulli-pvc
+      containers:
+      - image: lscr.io/linuxserver/tautulli:latest
+        name: tautulli
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        ports:
+        - containerPort: 8181
+          name: "tautulli"
+        volumeMounts:
+        - name: tautulli-storage
+          mountPath: "/config"

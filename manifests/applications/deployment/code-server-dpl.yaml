@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: code-server
+  namespace: servarr
+spec:
+  selector:
+    matchLabels:
+      app: code-server
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: code-server
+    spec:
+      volumes:
+      - name: code-server-storage
+        persistentVolumeClaim:
+          claimName: code-server-pvc
+      containers:
+      - image: lscr.io/linuxserver/code-server:latest
+        name: code-server
+        envFrom:
+        - secretRef:
+            name: secret-code-server
+        ports:
+        - containerPort: 8443
+          name: "code-server"
+        volumeMounts:
+        - name: code-server-storage
+          mountPath: "/config"

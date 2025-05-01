@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: bazarr-pvc
+  namespace: servarr
+spec:
+  storageClassName: bazarr
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 180Ti

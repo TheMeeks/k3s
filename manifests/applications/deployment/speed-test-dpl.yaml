@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: speed-test
+  namespace: servarr
+spec:
+  selector:
+    matchLabels:
+      app: speed-test
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: speed-test
+    spec:
+      volumes:
+      - name: speed-test-storage
+        persistentVolumeClaim:
+          claimName: speed-test-pvc
+      containers:
+      - image: lscr.io/linuxserver/speedtest-tracker:latest
+        name: speed-test
+        ports:
+        - containerPort: 8383
+          name: "speed-test"
+        volumeMounts:
+        - name: speed-test-storage
+          mountPath: "/config"

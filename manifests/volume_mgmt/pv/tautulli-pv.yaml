@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: tautulli-pv
+  namespace: servarr
+  labels:
+    type: local
+spec:
+  storageClassName: tautulli
+  capacity:
+    storage: 180Ti
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/unraid/appdatak8/k3s/tautulli"
+  persistentVolumeReclaimPolicy: Retain

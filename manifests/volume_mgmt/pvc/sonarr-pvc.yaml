@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sonarr-pvc
+  namespace: servarr
+spec:
+  storageClassName: sonarr
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 180Ti

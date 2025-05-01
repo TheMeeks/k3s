@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: music-pv
+  namespace: servarr
+  labels:
+    type: local
+spec:
+  storageClassName: music
+  capacity:
+    storage: 180Ti
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/unraid/music"
+  persistentVolumeReclaimPolicy: Retain

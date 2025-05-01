@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sonarr
+  namespace: servarr
+spec:
+  selector:
+    matchLabels:
+      app: sonarr
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: sonarr
+    spec:
+      volumes:
+      - name: sonarr-storage
+        persistentVolumeClaim:
+          claimName: sonarr-pvc
+      - name: downloads-storage
+        persistentVolumeClaim:
+          claimName: downloads-pvc
+      - name: tv-storage
+        persistentVolumeClaim:
+          claimName: tv-pvc
+      containers:
+      - image: lscr.io/linuxserver/sonarr:latest
+        name: sonarr
+        ports:
+        - containerPort: 8989
+          name: "sonarr"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi        
+        volumeMounts:
+        - name: sonarr-storage
+          mountPath: "/config"
+        - name: downloads-storage
+          mountPath: "/downloads"
+        - name: tv-storage
+          mountPath: "/tv"

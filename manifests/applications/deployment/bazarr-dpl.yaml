@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bazarr
+  namespace: servarr
+spec:
+  selector:
+    matchLabels:
+      app: bazarr
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: bazarr
+    spec:
+      volumes:
+      - name: bazarr-storage
+        persistentVolumeClaim:
+          claimName: bazarr-pvc
+      - name: tv-storage
+        persistentVolumeClaim:
+          claimName: tv-pvc
+      - name: movies-storage
+        persistentVolumeClaim:
+          claimName: movies-pvc
+      containers:
+      - image: lscr.io/linuxserver/bazarr:latest
+        name: bazarr
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        ports:
+        - containerPort: 6767
+          name: "bazarr"
+        volumeMounts:
+        - name: bazarr-storage
+          mountPath: "/config"
+        - name: tv-storage
+          mountPath: "/tv"
+        - name: movies-storage
+          mountPath: "/movies"

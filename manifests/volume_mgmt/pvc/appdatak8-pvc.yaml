@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: appdatak8-pvc
+  namespace: servarr
+spec:
+  storageClassName: appdatak8
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 180Ti

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: 4k-movies-pv
+  namespace: servarr
+  labels:
+    type: local
+spec:
+  storageClassName: 4k-movies
+  capacity:
+    storage: 180Ti
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/unraid/4k-movies"
+  persistentVolumeReclaimPolicy: Retain

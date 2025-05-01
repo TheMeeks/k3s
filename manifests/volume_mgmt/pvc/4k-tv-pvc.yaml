@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: 4k-tv-pvc
+  namespace: servarr
+spec:
+  storageClassName: 4k-tv
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 180Ti
